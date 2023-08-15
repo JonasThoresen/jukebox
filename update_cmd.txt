@@ -1,0 +1,2 @@
+If you get issues with youtube dl, force install it:
+pip install --upgrade --force-reinstall "git+https://github.com/ytdl-org/youtube-dl.git"

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jukebox</title>
+    <link rel="icon" type="image/x-icon"  href="{{ url_for('static',filename='favicon.ico') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+</head>
+<body onload="getPlaylist()">
+    <!-- Page image -->
+    <div class="px-4 pb-4 mb-4 mt-4 text-center">
+        <div class="d-block mx-auto mb-4">
+            <div class="radio-icon">📻</div> 
+        </div>
+        <h1 class="display-5 fw-bold">JUKEBOX</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-2">Play music from YouTube!</p>
+        </div>
+    </div>
+    
+    <div class="b-example-divider"></div>
+
+    <div class="px-4 pt-4 text-center border-bottom">
+        <h1 class="display-4 mb-5 fw-bold"> Queue </h1>
+        <div class="col-lg-4">
+            <div class="d-grid gap-1 d-sm-flex justify-content-sm-left mb-3">
+                <button type="button" class="btn btn-outline-primary btn-lg px-4 me-sm-1 text-nowrap" id="PlayPauseButton" onclick="playSong()">Play song</button>
+                <button type="button" class="btn btn-outline-primary btn-lg px-4 me-sm-1 text-nowrap" id="NextButton" onclick="nextSong()">Next song</button>
+                <button type="button" class="btn btn-outline-primary btn-lg px-4 me-sm-1 text-nowrap" id="NextButton" onclick="previousSong()">Previous song</button>
+                <button type="button" class="btn btn-outline-primary btn-lg px-4 me-sm-1 text-nowrap" id="NextButton" onclick="stop()">Stop</button>
+                <button type="button" class="btn btn-outline-primary btn-lg px-4 me-sm-1 text-nowrap" onclick="getPlaylist()">Refresh Queue</button>
+                <button type="button" class="btn btn-outline-primary btn-lg px-4 me-sm-1 text-nowrap" onclick="clearPlaylist()">Clear Queue</button>
+                <button type="button" class="btn btn-outline-primary btn-lg px-4 me-sm-1 text-nowrap" data-bs-toggle="modal" data-bs-target="#AddSongModal">Add song</button>
+                <button type="button" class="btn btn-outline-primary btn-lg px-4 me-sm-1 text-nowrap" data-bs-toggle="modal" data-bs-target="#VolumeSongModal" onclick="getVolume()">Volume</button>
+            </div>
+        </div>
+    </div>
+    <div class="queue overflow-auto" id="queue">
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/pIDfUoxbdhY/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song" style="background-color: var(--primary-color-alpha);">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/pIDfUoxbdhY/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/pIDfUoxbdhY/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/7q1QC8SbmxI/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/pIDfUoxbdhY/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+        <div class="song">
+            <img class="thumbnail" src="https://i.ytimg.com/vi/pIDfUoxbdhY/hqdefault.jpg"/>
+            <div class="row">
+                <div class="song-name fs-5"> Generic songname </div>
+                <div class="song-artist fs-6"> Generic artist </div>
+            </div>
+        </div>
+    </div>
+
+      
+    <!-- Popups -->
+    <div class="modal fade" id="AddSongModal" tabindex="-1" aria-labelledby="Add song pop-up modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Add song</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="add_song_clear_warning()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Youtube song URL:</label>
+                    <input type="text" class="form-control" id="AddSongInput" autocomplete="off" placeholder="http://www.youtube.com/watch?v=...">
+                </div>
+                <div class="mb-3 ModalWarning" id="AddModalWarningText"> No warning </div>
+                <div class="btn-group d-flex" role="group" aria-label="Video or list radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="AddSongVideo" autocomplete="off" disabled>
+                    <label class="btn btn-outline-primary" for="AddSongVideo">Video</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="AddSongList" autocomplete="off" disabled>
+                    <label class="btn btn-outline-primary" for="AddSongList">List</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="add_song_clear_warning()">Close</button>
+              <button type="button" class="btn btn-outline-primary " data-bs-dismiss="modal" disabled onclick="add_song()" id="AddSongButton" data-bs-dismiss="modal">Add</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" id="VolumeSongModal" tabindex="-1" aria-labelledby="Volume pop-up modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Volume</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="VolumeSlider" class="form-label" id="VolumeText">Volume</label>
+                    <input type="range" class="form-range" id="VolumeSlider" min="0" max="100" value="50" step="1" autofocus>
+                </div>
+                <div class="d-grid">
+                    <button type="button" class="btn btn-outline-primary " onclick="toggleMute()" id="MuteButton">Mute</button>
+                </div>
+                <div class="mb-3 ModalWarning" id="AddModalWarningText"> No warning </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-outline-primary " onclick="setVolume()" id="AddSongButton" data-bs-dismiss="modal">Set Volume</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" id="RemoveSongModal" tabindex="-1" aria-labelledby="asd" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">REMOVE SONG</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Whaddup mi bwudda
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-outline-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" id="SongModal" tabindex="-1" aria-labelledby="A modal for song details" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Details</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="flex-row">
+                  <span class="fw-bold">Position in queue:</span>
+                  <span id="songModalQueuePosition">position</span>
+                  <br>
+                  <span class="fw-bold">Song:</span>
+                  <span id="songModalSong">songname</span>
+                  <br>
+                  <span class="fw-bold">Artist:</span>
+                  <span id="songModalArtist">artist</span>
+                  <br>
+                  <span class="fw-bold">Song URL:</span>
+                  <a id="songModalSongURL" href="#" target="_blank" class="link-primary">Click me</a>
+                  <br>
+                  <span class="fw-bold">Artist URL:</span>
+                  <a id="songModalArtistURL" href="" target="_blank" class="link-primary">Click me</a>
+                  
+              </div>
+              <div class="row mt-3 px-2">
+                <button type="button" class="btn btn-outline-primary mb-2 " data-bs-dismiss="modal" onclick="playSpecificSong()">Play now</button>
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" onclick="removeSpecificSong()">Remove</button>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    
+    <!-- Selection buttons -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static',filename='js/script.js') }}"></script>
+</body>
