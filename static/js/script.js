@@ -1,9 +1,10 @@
 // global variable for hidden
 var open_prompt = false;
-var base_url = "http://localhost:8080/"
 var default_yt_image = "https://i.ytimg.com/vi/7q1QC8SbmxI/hqdefault.jpg";
 var youtube_api_key = "AIzaSyAg0bVAEKFx5Nm29Agc1VKnaTVQaGm0QPg";
-
+var ip = "0.0.0.0";
+var port = "8000";
+var base_url = "http://" + ip + ":" + port + "/";
 
 // Event listener for a range slider
 var volume_slider = document.getElementById("VolumeSlider");
@@ -184,7 +185,7 @@ function add_song() {
 
 function getPlaylist() {
     var request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:8080/queue", true);
+    request.open("GET", base_url +  "queue", true);
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
             // Remove all queue items
@@ -257,7 +258,7 @@ function getPlaylist() {
 // A function starts playing the song through the api
 function playSong() {
     var request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:8080/play", true);
+    request.open("GET", base_url +  "play", true);
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
@@ -274,7 +275,7 @@ function playSong() {
 // A function that plays the next song in the queue
 function nextSong() {
     var request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:8080/next", true);
+    request.open("GET", base_url +  "next", true);
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
@@ -291,7 +292,7 @@ function nextSong() {
 // A function that plays the previous song in the queue
 function previousSong() {
     var request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:8080/previous", true);
+    request.open("GET", base_url +  "previous", true);
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
@@ -308,7 +309,7 @@ function previousSong() {
 
 function getVolume() {
     var request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:8080/volume", true);
+    request.open("GET", base_url +  "volume", true);
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
             var volume = document.getElementById("VolumeSlider");
@@ -324,7 +325,7 @@ function getVolume() {
 
 function setVolume() {
     var request = new XMLHttpRequest();
-    request.open("POST", "http://localhost:8080/volume", true);
+    request.open("POST", base_url +  "volume", true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     // Set up a callback function to handle the response
     var volume = document.getElementById("VolumeSlider");
@@ -347,7 +348,7 @@ function setVolume() {
 
 function toggleMute() {
     var request = new XMLHttpRequest();
-    request.open("POST", "http://localhost:8080/volume", true);
+    request.open("POST", base_url +  "volume", true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE) {
@@ -435,7 +436,7 @@ function playSpecificSong() {
     
     var request = new XMLHttpRequest();
     
-    request.open("POST", "http://localhost:8080/changesong", true);
+    request.open("POST", base_url +  "changesong", true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE) {
@@ -458,7 +459,7 @@ function removeSpecificSong() {
     
     var request = new XMLHttpRequest();
     
-    request.open("POST", "http://localhost:8080/removesong", true);
+    request.open("POST", base_url +  "removesong", true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE) {
@@ -475,7 +476,7 @@ function removeSpecificSong() {
 
 function stop() {
     var request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:8080/stop", true);
+    request.open("GET", base_url +  "stop", true);
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
@@ -491,7 +492,7 @@ function stop() {
 
 function clearPlaylist() {
     var request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:8080/clearqueue", true);
+    request.open("GET", base_url +  "clearqueue", true);
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
